@@ -1,4 +1,4 @@
-import { Outlet } from 'react-router'
+import { Outlet } from 'react-router-dom'
 import { Navbar } from './Navbar'
 
 export function AppLayout() {
@@ -6,6 +6,7 @@ export function AppLayout() {
     <div className="app-shell">
       <div className="hero-orb hero-orb-left"></div>
       <div className="hero-orb hero-orb-right"></div>
+      <div className="hero-orb hero-orb-bottom"></div>
 
       <div className="page-frame">
         <Navbar />
@@ -14,20 +15,15 @@ export function AppLayout() {
           <Outlet />
         </main>
 
-        <footer className="glass-panel flex flex-col gap-3 px-6 py-5 text-sm sm:flex-row sm:items-center sm:justify-between">
+        <footer className="glass-panel flex flex-col gap-2 px-6 py-5 text-sm sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <p className="font-semibold text-[color:var(--text-main)]">
-              Product Store App
+            <p className="text-[color:var(--text-main)] font-semibold uppercase tracking-[0.18em]">
+              Aster Store
             </p>
-            <p>
-              Context API handles settings, Redux Toolkit manages the cart, and
-              React Query controls product data.
-            </p>
+            <p>Thoughtful finds for a calmer shopping experience.</p>
           </div>
 
-          <p className="text-xs uppercase tracking-[0.24em]">
-            React • TailwindCSS 4 • Vite 8
-          </p>
+          <p className="text-xs uppercase tracking-[0.24em]">Curated daily edit</p>
         </footer>
       </div>
     </div>

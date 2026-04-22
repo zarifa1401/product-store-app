@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router'
+import { Link } from 'react-router-dom'
 import { addToCart, selectCartQuantityById } from '../features/cart/cartSlice'
 import { formatCategoryName, formatCurrency } from '../lib/formatters'
 
@@ -10,39 +10,55 @@ export function ProductCard({ product, view = 'grid' }) {
 
   return (
     <article
-      className={`surface-card overflow-hidden ${
+      className={`product-card overflow-hidden ${
         isListView
-          ? 'flex flex-col gap-6 md:flex-row md:items-center'
-          : 'flex h-full flex-col gap-5'
+          ? 'flex flex-col gap-5 md:flex-row md:items-center'
+          : 'flex h-full flex-col gap-4'
       }`}
     >
       <Link
         to={`/products/${product.id}`}
         className={isListView ? 'md:w-72 md:flex-shrink-0' : ''}
       >
-        <div className="overflow-hidden rounded-[1.5rem] bg-white/80 p-6">
+        <div className="product-media">
           <img
             src={product.thumbnail}
             alt={product.title}
             className={`mx-auto object-contain transition duration-300 hover:scale-105 ${
-              isListView ? 'h-52 w-full' : 'h-56 w-full'
+              isListView ? 'h-52 w-full' : 'h-64 w-full'
             }`}
           />
         </div>
       </Link>
 
       <div className="flex flex-1 flex-col gap-4">
-        <div className="flex flex-wrap gap-2">
-          <span className="badge-pill">{formatCategoryName(product.category)}</span>
-          <span className="badge-pill">{product.brand || 'General Brand'}</span>
-          <span className="badge-pill">Rating {product.rating}</span>
+        <div className="flex items-start justify-between gap-4">
+          <div className="space-y-2">
+            <span className="badge-pill">{formatCategoryName(product.category)}</span>
+            <Link to={`/products/${product.id}`}>
+              <h2 className="text-[1.55rem] font-semibold leading-tight">
+                {product.title}
+              </h2>
+            </Link>
+          </div>
+
+          <div className="metric-chip">
+            <span className="text-xs uppercase tracking-[0.22em]">Rating</span>
+            <strong className="text-base text-[color:var(--text-main)]">
+              {product.rating}
+            </strong>
+          </div>
         </div>
 
-        <div className="space-y-2">
-          <Link to={`/products/${product.id}`}>
-            <h2 className="text-2xl font-semibold">{product.title}</h2>
-          </Link>
-          <p className="line-clamp-3">{product.description}</p>
+        <div className="space-y-3">
+          <p className="line-clamp-2 text-[15px] leading-7">{product.description}</p>
+          <div className="flex flex-wrap gap-2 text-sm">
+            <span>{product.brand || 'General Brand'}</span>
+            <span>/</span>
+            <span>{product.stock} in stock</span>
+            <span>/</span>
+            <span>{product.discountPercentage}% off</span>
+          </div>
         </div>
 
         <div className="mt-auto flex flex-wrap items-end justify-between gap-4">
@@ -50,17 +66,12 @@ export function ProductCard({ product, view = 'grid' }) {
             <p className="text-3xl font-bold text-[color:var(--text-main)]">
               {formatCurrency(product.price)}
             </p>
-            <p>
-              {product.stock} in stock • {product.discountPercentage}% discount
-            </p>
+            <p>Ready to ship</p>
           </div>
 
           <div className="flex flex-wrap gap-3">
-            <Link
-              to={`/products/${product.id}`}
-              className="action-btn-secondary"
-            >
-              View details
+            <Link to={`/products/${product.id}`} className="action-btn-secondary">
+              Details
             </Link>
             <button
               type="button"

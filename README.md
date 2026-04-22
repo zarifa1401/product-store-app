@@ -1,16 +1,120 @@
-# React + Vite
+# Product Store App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React assignment project that combines Context API + `useReducer`, Redux Toolkit, and React Query in one small e-commerce app.
 
-Currently, two official plugins are available:
+## Description
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+This app lets users browse products, open a product details page, switch shared UI settings, and manage a shopping cart.
 
-## React Compiler
+It was built to demonstrate:
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- when to use Context API for lightweight shared app settings
+- when to use Redux Toolkit for structured global state
+- when to use React Query for remote server data, caching, loading, and error handling
 
-## Expanding the ESLint configuration
+## Features
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- Product list fetched from the DummyJSON API
+- Loading state while data is being fetched
+- Error state when requests fail
+- Product details page using a separate React Query key
+- Shared settings with Context API + `useReducer`
+- Dark mode and light mode
+- Grid view and list view
+- Selected category stored in shared settings
+- Shopping cart built with Redux Toolkit
+- Add to cart
+- Remove from cart
+- Increase quantity
+- Decrease quantity
+- Clear cart
+- Total item count
+- Total price
+- Search products
+- Sort products
+- Responsive layout
+- Cart persistence in `localStorage`
+- Theme/settings persistence in `localStorage`
+
+## State Management Breakdown
+
+### Context API + `useReducer`
+
+Used for app-wide UI settings:
+
+- theme
+- product layout
+- selected category
+
+### Redux Toolkit
+
+Used for shopping cart state:
+
+- cart items
+- quantity updates
+- totals
+- clear/remove actions
+
+### React Query
+
+Used for API data:
+
+- category list
+- product list
+- product details
+- caching with query keys such as `['products', category]` and `['product', productId]`
+
+## Tools / Libraries Used
+
+- React 19
+- Vite 8
+- TailwindCSS 4 with `@tailwindcss/vite`
+- React Router DOM 6
+- Redux Toolkit
+- React Redux
+- TanStack React Query
+- DummyJSON API
+
+## Screenshots
+
+### Product Details Page
+
+![Product details page](./public/details-screenshot.png)
+
+### Cart Page
+
+![Cart page](./public/cart-screenshot.png)
+
+## How to Run
+
+1. Clone the repository.
+2. Open the project folder.
+3. Install dependencies:
+
+```bash
+npm install
+```
+
+4. Start the development server:
+
+```bash
+npm run dev
+```
+
+5. Open the local URL shown by Vite in your browser.
+
+## Build for Production
+
+```bash
+npm run build
+```
+
+## API
+
+This project uses the [DummyJSON Products API](https://dummyjson.com/docs/products).
+
+## Submission Notes
+
+- GitHub repository: this project folder
+- README included
+- Screenshots included in the README

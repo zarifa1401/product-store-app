@@ -1,21 +1,17 @@
-import { formatCategoryName } from '../lib/formatters'
+import { getStoreCategoryLabel } from '../lib/storeCategories'
 import { useSettings } from '../context/useSettings'
 
 const viewOptions = [
-  { value: 'grid', label: 'Grid view' },
-  { value: 'list', label: 'List view' },
+  { value: 'grid', label: 'Grid' },
+  { value: 'list', label: 'List' },
 ]
 
 const themeOptions = [
-  { value: 'light', label: 'Light mode' },
-  { value: 'dark', label: 'Dark mode' },
+  { value: 'light', label: 'Light' },
+  { value: 'dark', label: 'Dark' },
 ]
 
-export function SettingsPanel({
-  categories,
-  isLoading,
-  categoryErrorMessage = '',
-}) {
+export function SettingsPanel({ categories }) {
   const { state, dispatch } = useSettings()
 
   return (
@@ -23,11 +19,11 @@ export function SettingsPanel({
       <div className="flex flex-col gap-6">
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div>
-            <p className="eyebrow">Context API + useReducer</p>
-            <h2 className="mt-2 text-2xl font-semibold">Shared app settings</h2>
+            <p className="eyebrow">Refine the shop</p>
+            <h2 className="mt-2 text-2xl font-semibold">Personalize your browse</h2>
             <p className="mt-2 max-w-2xl">
-              These controls are stored in one context provider and updated with
-              reducer actions, so every page can respond without prop drilling.
+              Keep the storefront calmer with quick appearance, layout, and
+              category controls.
             </p>
           </div>
 
@@ -36,16 +32,14 @@ export function SettingsPanel({
             className="action-btn-secondary"
             onClick={() => dispatch({ type: 'settings/reset' })}
           >
-            Reset settings
+            Reset
           </button>
         </div>
 
-        <div className="grid gap-5 lg:grid-cols-3">
+        <div className="grid gap-4 xl:grid-cols-[240px_240px_minmax(0,1fr)]">
           <div className="metric-card space-y-3">
-            <p className="text-sm font-semibold uppercase tracking-[0.22em]">
-              Theme
-            </p>
-            <div className="flex flex-wrap gap-3">
+            <p className="text-sm font-semibold uppercase tracking-[0.22em]">Theme</p>
+            <div className="toggle-row">
               {themeOptions.map((option) => (
                 <button
                   key={option.value}
@@ -67,10 +61,8 @@ export function SettingsPanel({
           </div>
 
           <div className="metric-card space-y-3">
-            <p className="text-sm font-semibold uppercase tracking-[0.22em]">
-              Product layout
-            </p>
-            <div className="flex flex-wrap gap-3">
+            <p className="text-sm font-semibold uppercase tracking-[0.22em]">View</p>
+            <div className="toggle-row">
               {viewOptions.map((option) => (
                 <button
                   key={option.value}
@@ -91,62 +83,36 @@ export function SettingsPanel({
             </div>
           </div>
 
-          <div className="metric-card space-y-3">
-            <p className="text-sm font-semibold uppercase tracking-[0.22em]">
-              Selected category
-            </p>
-            <p className="text-lg font-semibold text-[color:var(--text-main)]">
-              {state.category === 'all'
-                ? 'All Products'
-                : formatCategoryName(state.category)}
-            </p>
-            <p>Category is also kept in shared settings state.</p>
+          <div className="metric-card space-y-4">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <p className="text-sm font-semibold uppercase tracking-[0.22em]">
+                Category
+              </p>
+              <p className="text-sm">{getStoreCategoryLabel(state.category)}</p>
+            </div>
+
+            <div className="flex flex-wrap gap-3">
+              {categories.map((category) => (
+                <button
+                  key={category.slug}
+                  type="button"
+                  className={
+                    state.category === category.slug
+                      ? 'action-btn'
+                      : 'action-btn-secondary'
+                  }
+                  onClick={() =>
+                    dispatch({
+                      type: 'settings/setCategory',
+                      payload: category.slug,
+                    })
+                  }
+                >
+                  {category.name}
+                </button>
+              ))}
+            </div>
           </div>
-        </div>
-
-        <div className="space-y-3">
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <p className="text-sm font-semibold uppercase tracking-[0.22em]">
-              Category filter
-            </p>
-            {isLoading ? <p>Loading categories...</p> : null}
-          </div>
-
-          <div className="flex flex-wrap gap-3">
-            <button
-              type="button"
-              className={
-                state.category === 'all' ? 'action-btn' : 'action-btn-secondary'
-              }
-              onClick={() =>
-                dispatch({ type: 'settings/setCategory', payload: 'all' })
-              }
-            >
-              All
-            </button>
-
-            {categories.map((category) => (
-              <button
-                key={category.slug}
-                type="button"
-                className={
-                  state.category === category.slug
-                    ? 'action-btn'
-                    : 'action-btn-secondary'
-                }
-                onClick={() =>
-                  dispatch({
-                    type: 'settings/setCategory',
-                    payload: category.slug,
-                  })
-                }
-              >
-                {category.name}
-              </button>
-            ))}
-          </div>
-
-          {categoryErrorMessage ? <p>{categoryErrorMessage}</p> : null}
         </div>
       </div>
     </section>

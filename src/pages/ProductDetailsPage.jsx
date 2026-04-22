@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, useParams } from 'react-router'
+import { Link, useParams } from 'react-router-dom'
 import { fetchProductById } from '../api/products'
 import { ErrorState } from '../components/ErrorState'
 import { addToCart, selectCartQuantityById } from '../features/cart/cartSlice'
@@ -40,7 +40,7 @@ export function ProductDetailsPage() {
         message={productQuery.error?.message || 'The selected product is unavailable right now.'}
         action={
           <Link to="/" className="action-btn">
-            Back to catalog
+            Back to shop
           </Link>
         }
       />
@@ -57,12 +57,12 @@ export function ProductDetailsPage() {
   return (
     <section className="space-y-6">
       <Link to="/" className="action-btn-secondary">
-        Back to products
+        Back to shop
       </Link>
 
       <article className="glass-panel grid gap-6 px-6 py-6 xl:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)]">
         <div className="space-y-4">
-          <div className="overflow-hidden rounded-[2rem] bg-white/80 p-8">
+          <div className="product-media rounded-[2rem] p-8">
             <img
               src={activeImage}
               alt={product.title}
@@ -154,7 +154,7 @@ export function ProductDetailsPage() {
                 </p>
               </div>
               <div>
-                <p className="text-sm uppercase tracking-[0.24em]">Return policy</p>
+                <p className="text-sm uppercase tracking-[0.24em]">Returns</p>
                 <p className="mt-2 text-lg font-semibold text-[color:var(--text-main)]">
                   {product.returnPolicy || '30-day returns'}
                 </p>
@@ -171,7 +171,7 @@ export function ProductDetailsPage() {
               {quantityInCart > 0 ? `Add another (${quantityInCart})` : 'Add to cart'}
             </button>
             <Link to="/cart" className="action-btn-secondary">
-              Go to cart
+              View cart
             </Link>
           </div>
 

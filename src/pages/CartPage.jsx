@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router'
+import { Link } from 'react-router-dom'
 import { CartItem } from '../components/CartItem'
 import {
   clearCart,
@@ -16,11 +16,11 @@ export function CartPage() {
   if (!items.length) {
     return (
       <section className="glass-panel px-6 py-10 text-center">
-        <p className="eyebrow">Redux Toolkit</p>
-        <h2 className="mt-3 text-3xl font-semibold">Your cart is empty</h2>
+        <p className="eyebrow">Your cart</p>
+        <h2 className="mt-3 text-3xl font-semibold">Your bag is still empty</h2>
         <p className="mx-auto mt-3 max-w-2xl">
-          Add products from the catalog to test the cart slice, totals, quantity
-          controls, and shared state updates.
+          Add a few pieces from the collection and they will appear here with a
+          live order summary.
         </p>
         <div className="mt-6 flex justify-center">
           <Link to="/" className="action-btn">
@@ -35,12 +35,9 @@ export function CartPage() {
     <section className="grid gap-6 xl:grid-cols-[minmax(0,1.7fr)_380px]">
       <div className="space-y-5">
         <div>
-          <p className="eyebrow">Cart Page</p>
-          <h2 className="mt-2 text-3xl font-semibold">Shopping cart</h2>
-          <p className="mt-2">
-            All cart updates come from Redux Toolkit using `useDispatch` and
-            `useSelector`.
-          </p>
+          <p className="eyebrow">Shopping bag</p>
+          <h2 className="mt-2 text-3xl font-semibold">Review your picks</h2>
+          <p className="mt-2">Adjust quantities, remove items, or head back to the shop.</p>
         </div>
 
         {items.map((item) => (

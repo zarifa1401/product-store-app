@@ -10,17 +10,8 @@ async function fetchJson(path) {
   return response.json()
 }
 
-export async function fetchCategories() {
-  return fetchJson('/products/categories')
-}
-
-export async function fetchProducts(category = 'all') {
-  const path =
-    category === 'all'
-      ? '/products?limit=0'
-      : `/products/category/${encodeURIComponent(category)}?limit=0`
-
-  const data = await fetchJson(path)
+export async function fetchProducts() {
+  const data = await fetchJson('/products?limit=0')
   return data.products
 }
 
