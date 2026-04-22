@@ -1,111 +1,254 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Sora:wght@400;600;700;800&display=swap");
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+  --page-bg: #f7efe4;
+  --page-bg-2: #ead9c7;
+  --surface: rgba(255, 249, 240, 0.82);
+  --surface-strong: rgba(255, 255, 255, 0.94);
+  --line: rgba(82, 53, 29, 0.12);
+  --text-main: #18212f;
+  --text-soft: #5f6774;
+  --accent: #d26534;
+  --accent-hover: #b95024;
+  --accent-soft: rgba(210, 101, 52, 0.12);
+  --accent-ink: #7f2f0e;
+  --shadow: 0 24px 50px rgba(73, 38, 18, 0.12);
+}
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
+.dark {
+  --page-bg: #0f1724;
+  --page-bg-2: #152639;
+  --surface: rgba(11, 19, 31, 0.72);
+  --surface-strong: rgba(15, 27, 43, 0.94);
+  --line: rgba(148, 163, 184, 0.14);
+  --text-main: #edf5ff;
+  --text-soft: #a8bbd7;
+  --accent: #f6a36f;
+  --accent-hover: #f97316;
+  --accent-soft: rgba(246, 163, 111, 0.16);
+  --accent-ink: #ffe5d3;
+  --shadow: 0 24px 50px rgba(0, 0, 0, 0.32);
+}
 
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
-  background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@layer base {
+  * {
+    @apply box-border;
+  }
 
-  @media (max-width: 1024px) {
-    font-size: 16px;
+  html {
+    @apply scroll-smooth;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    color: var(--text-main);
+    font-family: "DM Sans", sans-serif;
+    background:
+      radial-gradient(circle at top left, rgba(255, 255, 255, 0.78), transparent 28%),
+      radial-gradient(circle at top right, rgba(210, 101, 52, 0.18), transparent 26%),
+      linear-gradient(135deg, var(--page-bg), var(--page-bg-2));
+  }
+
+  #root {
+    min-height: 100vh;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    margin: 0;
+    color: var(--text-main);
+    font-family: "Sora", sans-serif;
+    letter-spacing: -0.03em;
+  }
+
+  p {
+    margin: 0;
+    color: var(--text-soft);
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  img {
+    display: block;
+    max-width: 100%;
+  }
+
+  button,
+  input,
+  select {
+    font: inherit;
+  }
+
+  button {
+    cursor: pointer;
+  }
+
+  input::placeholder {
+    color: color-mix(in srgb, var(--text-soft) 78%, transparent);
+  }
+
+  ::selection {
+    background: var(--accent-soft);
+    color: var(--text-main);
   }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
+@layer components {
+  .app-shell {
+    @apply relative min-h-screen overflow-hidden;
   }
 
-  #social .button-icon {
-    filter: invert(1) brightness(2);
+  .page-frame {
+    @apply relative mx-auto flex w-full max-w-7xl flex-col gap-6 px-4 py-6 sm:px-6 lg:px-8;
   }
-}
 
-body {
-  margin: 0;
-}
-
-#root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-}
-
-h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
-}
-
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
+  .glass-panel {
+    @apply rounded-[2rem] border backdrop-blur-xl;
+    background: var(--surface);
+    border-color: var(--line);
+    box-shadow: var(--shadow);
   }
-}
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
+
+  .surface-card {
+    @apply rounded-[1.75rem] border p-5 transition duration-300;
+    background: var(--surface-strong);
+    border-color: var(--line);
+    box-shadow: 0 18px 40px rgba(15, 23, 42, 0.06);
   }
-}
-p {
-  margin: 0;
-}
 
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
-}
+  .surface-card:hover {
+    transform: translateY(-2px);
+  }
 
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
+  .section-title {
+    @apply text-3xl font-semibold sm:text-4xl;
+  }
+
+  .eyebrow {
+    @apply text-xs font-semibold uppercase tracking-[0.3em];
+    color: var(--accent);
+  }
+
+  .metric-card {
+    @apply rounded-[1.5rem] border px-4 py-4;
+    background: color-mix(in srgb, var(--surface-strong) 88%, transparent);
+    border-color: var(--line);
+  }
+
+  .field-input {
+    @apply w-full rounded-full border px-4 py-3 outline-none transition;
+    background: color-mix(in srgb, var(--surface-strong) 92%, transparent);
+    border-color: var(--line);
+    color: var(--text-main);
+  }
+
+  .field-input:focus {
+    border-color: color-mix(in srgb, var(--accent) 60%, white);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 16%, transparent);
+  }
+
+  .select-input {
+    @apply w-full rounded-full border px-4 py-3 pr-10 outline-none transition;
+    appearance: none;
+    background: color-mix(in srgb, var(--surface-strong) 92%, transparent);
+    border-color: var(--line);
+    color: var(--text-main);
+  }
+
+  .select-input:focus {
+    border-color: color-mix(in srgb, var(--accent) 60%, white);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 16%, transparent);
+  }
+
+  .action-btn {
+    @apply inline-flex items-center justify-center rounded-full px-4 py-2.5 text-sm font-semibold transition duration-200;
+    background: var(--accent);
+    color: #fff;
+  }
+
+  .action-btn:hover {
+    background: var(--accent-hover);
+    transform: translateY(-1px);
+  }
+
+  .action-btn-secondary {
+    @apply inline-flex items-center justify-center rounded-full border px-4 py-2.5 text-sm font-semibold transition duration-200;
+    background: color-mix(in srgb, var(--surface-strong) 90%, transparent);
+    border-color: var(--line);
+    color: var(--text-main);
+  }
+
+  .action-btn-secondary:hover {
+    border-color: color-mix(in srgb, var(--accent) 35%, white);
+    background: color-mix(in srgb, var(--accent-soft) 70%, var(--surface-strong));
+  }
+
+  .icon-btn {
+    @apply inline-flex items-center justify-center rounded-full border px-3 py-2 text-sm font-semibold transition;
+    background: color-mix(in srgb, var(--surface-strong) 92%, transparent);
+    border-color: var(--line);
+    color: var(--text-main);
+  }
+
+  .icon-btn:hover {
+    border-color: color-mix(in srgb, var(--accent) 35%, white);
+  }
+
+  .badge-pill {
+    @apply inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em];
+    background: var(--accent-soft);
+    color: var(--accent-ink);
+  }
+
+  .nav-link {
+    @apply rounded-full px-4 py-2 text-sm font-medium transition;
+    color: var(--text-soft);
+  }
+
+  .nav-link:hover {
+    color: var(--text-main);
+    background: color-mix(in srgb, var(--accent-soft) 40%, transparent);
+  }
+
+  .nav-link-active {
+    color: var(--text-main);
+    background: color-mix(in srgb, var(--accent-soft) 80%, var(--surface-strong));
+  }
+
+  .product-grid {
+    @apply grid gap-5 md:grid-cols-2 xl:grid-cols-3;
+  }
+
+  .product-list {
+    @apply flex flex-col gap-4;
+  }
+
+  .hero-orb {
+    @apply pointer-events-none absolute rounded-full blur-3xl;
+  }
+
+  .hero-orb-left {
+    top: -80px;
+    left: -20px;
+    height: 260px;
+    width: 260px;
+    background: rgba(248, 177, 149, 0.24);
+  }
+
+  .hero-orb-right {
+    top: 20px;
+    right: -60px;
+    height: 320px;
+    width: 320px;
+    background: rgba(125, 211, 252, 0.18);
+  }
 }
