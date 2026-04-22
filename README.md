@@ -37,4 +37,4 @@ A modern product store app built with React where users can browse products, vie
 npm install
 npm run dev
 ```
-Live link: https://product-store-app-neon.vercel.app/cart
+Live link: https://product-store-app-neon.vercel.app/
