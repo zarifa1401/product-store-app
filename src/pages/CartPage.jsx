@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { CartItem } from '../components/CartItem'
+import { useToast } from '../context/useToast'
 import {
   clearCart,
   selectCartItems,
@@ -10,6 +11,7 @@ import { formatCurrency } from '../lib/formatters'
 
 export function CartPage() {
   const dispatch = useDispatch()
+  const { showToast } = useToast()
   const items = useSelector(selectCartItems)
   const { itemsCount, totalPrice } = useSelector(selectCartTotals)
 
@@ -77,7 +79,10 @@ export function CartPage() {
             <button
               type="button"
               className="action-btn w-full"
-              onClick={() => dispatch(clearCart())}
+              onClick={() => {
+                dispatch(clearCart())
+                showToast('Cart cleared')
+              }}
             >
               Clear cart
             </button>

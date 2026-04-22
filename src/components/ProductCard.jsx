@@ -1,10 +1,12 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { useToast } from '../context/useToast'
 import { addToCart, selectCartQuantityById } from '../features/cart/cartSlice'
 import { formatCategoryName, formatCurrency } from '../lib/formatters'
 
 export function ProductCard({ product, view = 'grid' }) {
   const dispatch = useDispatch()
+  const { showToast } = useToast()
   const quantityInCart = useSelector(selectCartQuantityById(product.id))
   const isListView = view === 'list'
 
@@ -76,7 +78,10 @@ export function ProductCard({ product, view = 'grid' }) {
             <button
               type="button"
               className="action-btn"
-              onClick={() => dispatch(addToCart(product))}
+              onClick={() => {
+                dispatch(addToCart(product))
+                showToast(`${product.title} added to cart`)
+              }}
             >
               {quantityInCart > 0 ? `Add another (${quantityInCart})` : 'Add to cart'}
             </button>

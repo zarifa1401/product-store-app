@@ -1,4 +1,5 @@
 import { useDispatch } from 'react-redux'
+import { useToast } from '../context/useToast'
 import {
   decreaseQuantity,
   increaseQuantity,
@@ -8,6 +9,7 @@ import { formatCategoryName, formatCurrency } from '../lib/formatters'
 
 export function CartItem({ item }) {
   const dispatch = useDispatch()
+  const { showToast } = useToast()
 
   return (
     <article className="surface-card flex flex-col gap-5 sm:flex-row sm:items-center">
@@ -40,7 +42,10 @@ export function CartItem({ item }) {
             <button
               type="button"
               className="icon-btn"
-              onClick={() => dispatch(decreaseQuantity(item.id))}
+              onClick={() => {
+                dispatch(decreaseQuantity(item.id))
+                showToast(`${item.title} quantity updated`, 'info')
+              }}
               aria-label={`Decrease quantity for ${item.title}`}
             >
               -
@@ -51,7 +56,10 @@ export function CartItem({ item }) {
             <button
               type="button"
               className="icon-btn"
-              onClick={() => dispatch(increaseQuantity(item.id))}
+              onClick={() => {
+                dispatch(increaseQuantity(item.id))
+                showToast(`${item.title} quantity updated`, 'info')
+              }}
               aria-label={`Increase quantity for ${item.title}`}
             >
               +
@@ -69,7 +77,10 @@ export function CartItem({ item }) {
             <button
               type="button"
               className="action-btn-secondary"
-              onClick={() => dispatch(removeFromCart(item.id))}
+              onClick={() => {
+                dispatch(removeFromCart(item.id))
+                showToast(`${item.title} removed from cart`)
+              }}
             >
               Remove
             </button>

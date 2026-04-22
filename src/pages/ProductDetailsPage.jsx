@@ -4,12 +4,14 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link, useParams } from 'react-router-dom'
 import { fetchProductById } from '../api/products'
 import { ErrorState } from '../components/ErrorState'
+import { useToast } from '../context/useToast'
 import { addToCart, selectCartQuantityById } from '../features/cart/cartSlice'
 import { formatCategoryName, formatCurrency } from '../lib/formatters'
 
 export function ProductDetailsPage() {
   const { productId } = useParams()
   const dispatch = useDispatch()
+  const { showToast } = useToast()
   const quantityInCart = useSelector(selectCartQuantityById(Number(productId)))
   const [selectedImage, setSelectedImage] = useState('')
 
@@ -166,7 +168,10 @@ export function ProductDetailsPage() {
             <button
               type="button"
               className="action-btn"
-              onClick={() => dispatch(addToCart(product))}
+              onClick={() => {
+                dispatch(addToCart(product))
+                showToast(`${product.title} added to cart`)
+              }}
             >
               {quantityInCart > 0 ? `Add another (${quantityInCart})` : 'Add to cart'}
             </button>

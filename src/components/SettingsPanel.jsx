@@ -1,5 +1,6 @@
 import { getStoreCategoryLabel } from '../lib/storeCategories'
 import { useSettings } from '../context/useSettings'
+import { useToast } from '../context/useToast'
 
 const viewOptions = [
   { value: 'grid', label: 'Grid' },
@@ -13,6 +14,7 @@ const themeOptions = [
 
 export function SettingsPanel({ categories }) {
   const { state, dispatch } = useSettings()
+  const { showToast } = useToast()
 
   return (
     <section className="glass-panel px-6 py-6">
@@ -48,10 +50,13 @@ export function SettingsPanel({ categories }) {
                     state.theme === option.value ? 'action-btn' : 'action-btn-secondary'
                   }
                   onClick={() =>
-                    dispatch({
-                      type: 'settings/setTheme',
-                      payload: option.value,
-                    })
+                    {
+                      dispatch({
+                        type: 'settings/setTheme',
+                        payload: option.value,
+                      })
+                      showToast(`Theme changed to ${option.label.toLowerCase()}`, 'info')
+                    }
                   }
                 >
                   {option.label}
@@ -71,10 +76,13 @@ export function SettingsPanel({ categories }) {
                     state.view === option.value ? 'action-btn' : 'action-btn-secondary'
                   }
                   onClick={() =>
-                    dispatch({
-                      type: 'settings/setView',
-                      payload: option.value,
-                    })
+                    {
+                      dispatch({
+                        type: 'settings/setView',
+                        payload: option.value,
+                      })
+                      showToast(`${option.label} enabled`, 'info')
+                    }
                   }
                 >
                   {option.label}
@@ -102,10 +110,13 @@ export function SettingsPanel({ categories }) {
                       : 'action-btn-secondary'
                   }
                   onClick={() =>
-                    dispatch({
-                      type: 'settings/setCategory',
-                      payload: category.slug,
-                    })
+                    {
+                      dispatch({
+                        type: 'settings/setCategory',
+                        payload: category.slug,
+                      })
+                      showToast(`${category.name} category selected`, 'info')
+                    }
                   }
                 >
                   {category.name}

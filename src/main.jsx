@@ -6,6 +6,7 @@ import { BrowserRouter } from 'react-router-dom'
 import App from './App.jsx'
 import { store } from './app/store'
 import { SettingsProvider } from './context/settingsContext.jsx'
+import { ToastProvider } from './context/toastContext.jsx'
 import './index.css'
 
 const queryClient = new QueryClient({
@@ -23,11 +24,13 @@ createRoot(document.getElementById('root')).render(
   <StrictMode>
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
-        <SettingsProvider>
-          <BrowserRouter>
-            <App />
-          </BrowserRouter>
-        </SettingsProvider>
+        <ToastProvider>
+          <SettingsProvider>
+            <BrowserRouter>
+              <App />
+            </BrowserRouter>
+          </SettingsProvider>
+        </ToastProvider>
       </QueryClientProvider>
     </Provider>
   </StrictMode>,

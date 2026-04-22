@@ -11,6 +11,8 @@ A modern product store app built with React where users can browse products, vie
 - Dark mode / light mode
 - Grid view / list view
 - Shopping cart with add, remove, increase, decrease, clear, total items, and total price
+- Toast messages for cart and settings actions
+- Skeleton loading while fetching data
 - Responsive design
 - Cart and settings saved in `localStorage`
 
