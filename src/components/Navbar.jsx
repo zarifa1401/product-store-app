@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux'
-import { NavLink } from 'react-router-dom'
+import { NavLink } from 'react-router'
 import { selectCartTotals } from '../features/cart/cartSlice'
 import { useSettings } from '../context/useSettings'
 import { formatCurrency } from '../lib/formatters'

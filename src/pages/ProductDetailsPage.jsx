@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router'
 import { fetchProductById } from '../api/products'
 import { ErrorState } from '../components/ErrorState'
 import { addToCart, selectCartQuantityById } from '../features/cart/cartSlice'
